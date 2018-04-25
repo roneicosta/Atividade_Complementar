@@ -1,0 +1,53 @@
+.formFields {
+ text-family:Verdana, Arial, Helvetica, sans-serif; /*Nome da fonte*/
+ font-weight:bold;
+ text-size:12px; /*Tamanho da fonte*/
+ color:#000000; /*Cor da fonte*/
+ background:#C0C0C0; /*Cor de fundo do elemento*/
+}
+
+#fieldset1 {
+  width: 490;
+  z-index:auto !important;
+  border:5px solid #E6E6E6;
+  float: left;
+}
+legend {
+  font: bold 16px verdana, arial, tahoma, sans-sarif;
+}
+
+label {
+ font: bold 10px verdana, arial, tahoma, sans-sarif;
+ display: block;
+ width: 215px;
+ float: left;
+ margin: 5px, 5px, 10px,5px;
+/* border:solid 1px;*/
+ height: 45px;
+}
+
+label input {
+ width: 200px;
+ text-family:Verdana, Arial, Helvetica, sans-serif; /*Nome da fonte*/
+ font-weight:bold;
+ text-size:12px; /*Tamanho da fonte*/
+ color:#000000; /*Cor da fonte*/
+ border:5px solid #E6E6E6;
+ /*background:#C0C0C0; /*Cor de fundo do elemento*/
+}
+
+label select {
+ width: 200px;
+ text-family:Verdana, Arial, Helvetica, sans-serif; /*Nome da fonte*/
+ font-weight:bold;
+ text-size:12px; /*Tamanho da fonte*/
+ color:#000000; /*Cor da fonte*/
+ border:5px solid #E6E6E6;
+ /*background:#C0C0C0; /*Cor de fundo do elemento*/
+}
+
+
+label span {
+  font: bold 8px verdana, arial, tahoma, sans-sarif;
+  color:gray;
+}

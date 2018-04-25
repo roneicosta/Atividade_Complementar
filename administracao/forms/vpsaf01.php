@@ -1,0 +1,40 @@
+<?php
+global $nome_p_saf01;
+$nome_p_saf01 = $_REQUEST['nome_p_saf01'];
+
+echo "<form name='vpa101' action='index.php' method='get'  onSubmit='return checkEditvFields(this)'>";
+echo '<table border="0" id="box-table-b">';
+echo '<thead>';
+echo '<tr>';
+echo '<th width="15%" align="center">CÓDIGO/ID</th>';
+echo '<th width="62%" align="left">NOME</th>';
+echo '<th width="15%" align="center">FONE</th>';
+echo '<th width="9%" align="center">AÇÃO</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody><tr>';
+echo '<td align="center"><font face="verdana" size="1">[blk_lista_saf01.AF_ID;block=tr]</font> </td>';
+echo '<td align="left"><font face="verdana" size="1"><span class="AncoraGrid"><a href="?acao=Alt&idsecao=15S&form=15SA&id_p_saf01=[blk_lista_saf01.AF_ID]&idsub=16&nome_pro=[blk_lista_saf01.AF_DESCR]">[blk_lista_saf01.AF_DESCR]</a></span></font></td>';
+echo '<td><font face="verdana" size="1"> [blk_lista_saf01.AF_FONE]</font> </td>';
+echo '<td ><a href="?acao=Alt&idsecao=15S&form=15SA&id_p_saf01=[blk_lista_saf01.AF_ID]&idsub=16&nome_pro=[blk_lista_saf01.AF_DESCR]"><img src="[var.dir_img]/icons/alterar_registro.gif" ALT="Alterar" TITLE="Alterar" align="LEFT"></a>';
+echo '<a href=\'javascript:confirmaExclusao("?acao=Del&idf_p_saf01=[blk_lista_saf01.AF_FILIAL]&idp_p_saf01=[blk_lista_saf01.AF_ID]&idsecao=[var.idsecao]&form=[var.form]")\'><img src="[var.dir_img]/icons/Excluir.gif" ALT="Deletar" TITLE="Deletar" align="LEFT"></a>';
+echo '<a href="?acao=Set&idsecao=[var.idsecao]&form=[var.form]&id_p_saf01=[blk_lista_saf01.AF_ID]&idsub=16&nome_pro=[blk_lista_saf01.AF_DESCR]"><img src="[var.dir_img]/icons/Ok_16.png" ALT="Seleciona aluno" TITLE="Seleciona aluno" align="RIGHT"></a>';
+echo '</td>';
+echo '</tr></tbody>';
+echo '</table>';
+echo '<div align="center"><br>';
+echo 'Numero de registros: [var.RecCnt]<br>10 por pagina.';
+echo '<br>';
+echo '</div>';
+echo '<table border="0" align="center" cellpadding="2" cellspacing="0">';
+echo '<tr align="center">';
+echo '<td width="16"><a href="[var..script_name]?idsecao=[var.idsecao]&form=[var.form]&[var._SESSION.parte]&nome_p_saf01=[var.nome_p_saf01]&PageNum=[nv.first;endpoint;magnet=a;mtype=m+m]"><img src="[var.dir_img]/icons/[var.pag_pri]" TITLE="Primeira pagina"></a></td>';
+echo '<td width="16"><a href="[var..script_name]?idsecao=[var.idsecao]&form=[var.form]&[var._SESSION.parte]&nome_p_saf01=[var.nome_p_saf01]&PageNum=[nv.prev;endpoint;magnet=a;mtype=m+m]"><img src="[var.dir_img]/icons/[var.pag_ant]" TITLE="Anterior"></a></td>';
+echo '<td width="16"><a href="[var..script_name]?idsecao=[var.idsecao]&form=[var.form]&[var._SESSION.parte]&nome_p_saf01=[var.nome_p_saf01]&PageNum=[nv.page;block=td;navsize=3;navpos=centred]">[nv.page]</a></td>';
+echo '<td width="16" bgcolor="#C4E1E1"><strong>[nv.page;block=td;currpage]</strong></td>';
+echo '<td width="16"><a href="[var..script_name]?idsecao=[var.idsecao]&form=[var.form]&[var._SESSION.parte]&nome_p_saf01=[var.nome_p_saf01]&PageNum=[nv.next;endpoint;magnet=a;mtype=m+m]"><img src="[var.dir_img]/icons/[var.pag_pro]"  TITLE="Proxima"></a></td>';
+echo '<td width="16"><a href="[var..script_name]?idsecao=[var.idsecao]&form=[var.form]&[var._SESSION.parte]&nome_p_saf01=[var.nome_p_saf01]&PageNum=[nv.last;endpoint;magnet=a;mtype=m+m]"><img src="[var.dir_img]/icons/[var.pag_ult]"  TITLE="Ultima pagina"></a></td>';
+echo '</tr>';
+echo '</table>';
+echo '<table><tr><td><form  onSubmit="return checkEditvFields(this)"><input name="voltar" type="button" id="button" onClick="javascript:history.back();" value="Voltar"></td></tr></table></form>';
+

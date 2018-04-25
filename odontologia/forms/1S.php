@@ -1,0 +1,155 @@
+<?php
+echo '<div class="container">';
+echo "<div id='titcad'>Cadastro Aluno </div>";
+echo "<form name='SA101' action='index.php' method='post'  onSubmit='return checkEditvFields(this)'>";
+echo '<div class="simpleTabs">
+    <ul class="simpleTabsNavigation">
+
+      <li><a href="javascript:void(0)">Dados Aluno</a></li>
+      <li><a href="javascript:void(0)">Documetos</a></li>
+      <li><a href="javascript:void(0)">Filiação/Responsável</a></li>
+      <li><a href="javascript:void(0)">Ingresso/Escolaridade</a></li>
+      <li><a href="javascript:void(0)">Conclusão/Curso</a></li>
+    </ul>
+ <div class="simpleTabsContent">';
+
+echo "<table border=0 bgcolor='#E6E6E6' width='100%'>";
+echo "<tr><td><input name='A1_ID'type='hidden'value='0'size='10'></td></tr>";
+echo "<tr><td width='110'><label for='filial'>Filial</label></td>";
+echo "<td><select style='width:53%;' label='filial' name='A1_filial'><option value='[blk_fil_cad.M1_ID;block=option;ondata=f_selectedfilial]'[blk_fil_cad.seleciona]>[blk_fil_cad.M1_DESCR]</option></select></td>";
+echo "<tr><td width='110'><label for='A1_mat'>Matricula </label></td>";
+echo "<td><input label='Matricula'name='A1_mat'type='text'value=''size='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_nome'>Nome </label></td>";
+echo "<td><input label='Nome'name='A1_nome'type='text'value=''size='50' Req='true' Camp='Nome'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_end'>Endereço </label></td>";
+echo "<td><input label='Endereço'name='A1_end'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_bair'>Bairro </label></td>";
+echo "<td><input label='Bairro'name='A1_bair'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_minic'>Municipío </label></td>";
+echo "<td><input label='Municipío'name='A1_minic'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_est'>UF </label></td>";
+echo "<td><select  label='UF' name='A1_est' >" . lista_nest()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_cep'>Cep </label></td>";
+echo '<td><input label="A1_cep" name="A1_cep" type="text" value="" size="9" onkeypress="mascara(this,cep)" maxlength="9"> </td></tr>';
+echo "<tr><td width='110'><label for='A1_fone'>Fone </label></td>";
+echo "<td><input label='Fone'name='A1_fone'type='text'value=''size='14' onkeypress='mascara(this,telefone)' maxlength='14'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_fone2'>Fone2 </label></td>";
+echo "<td><input label='Fone2'name='A1_fone2'type='text'value=''size='14' onkeypress='mascara(this,telefone)' maxlength='14'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_cel'>Celular </label></td>";
+echo "<td><input label='Celular'name='A1_cel'type='text'value=''size='14' onkeypress='mascara(this,telefone)' maxlength='14'> </td></tr>";
+echo "<tr><td width='110'><label for='t3_mail'>E-m@il </label></td>";
+echo "<td><input label='E-m@il'name='t3_mail'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_datanasc'>Data Nascimento</label></td>";
+echo '<td><input label="A1_datanasc" name="A1_datanasc"type="text" value="" size="10" onkeypress="mascara(this,data)" maxlength="10"  > </td></tr>';
+echo "<tr><td width='110'><label for='A1_sex'>Sexo </label></td>";
+echo "<td><select  label='Sexo' name='A1_sex' >".lista_sexo()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_estcivil'>Estado Civil</label></td>";
+echo "<td><select  label='A1_estcivil' name='A1_estcivil' >".lista_estcivil()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_nacional'>Nacionalidade </label></td>";
+echo "<td><input label='Nacionalidade'name='A1_nacional'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_natural'>Naturalidade </label></td>";
+echo "<td><input label='Naturalidade'name='A1_natural'type='text'value=''size='30'  > </td></tr>";
+echo "<tr><td width='110'><label for='A1_estnatu'>UF Natural </label></td>";
+echo "<td><select  label='A1_estnatu' name='A1_estnatu' >" . lista_nest()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_defic'>Deficiente</label></td>";
+echo "<td><select  label='A1_defic' name='A1_defic' >" . sim_nao()."</select></td></tr>";
+echo "</table>";
+echo "</div>";
+echo '<div class="simpleTabsContent">';
+echo "<table border=0 bgcolor='#E6E6E6' width='100%'>";
+echo "<tr><td width='110'><label for='A1_rg'>Identidade nº</label></td>";
+echo "<td><input label='A1_rg'name='A1_rg'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_orgexp'>Orgão Exp</label></td>";
+echo "<td><input label='A1_orgexp'name='A1_orgexp'type='text'value=''size='30' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_dataexp'>Data Exped</label></td>";
+echo '<td><input label="A1_dataexp" name="A1_dataexp"type="text" value="" size="10" onkeypress="mascara(this,data)" maxlength="10"  onBlur="ValidaData(SA101.A1_dataexp);"> </td></tr>';
+echo "<tr><td width='110'><label for='A1_cpf'>CPF</label></td>";
+echo "<td><input label='A1_cpf'name='A1_cpf'type='text'value=''size='14' onkeydown='mascara(this,cpf)' maxlength='14'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_titulo'>Titulo</label></td>";
+echo "<td><input label='A1_titulo'name='A1_titulo'type='text'value=''size='30' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_titulo'>Zona Titulo</label></td>";
+echo "<td><input label='A1_zonatit'name='A1_zonatit'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_sectit'>Seção Titulo</label></td>";
+echo "<td><input label='A1_sectit'name='A1_sectit'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_minictitulo'>Municip Titulo</label></td>";
+echo "<td><input label='A1_minictitulo'name='A1_minictitulo'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_reserva'>Reservista</label></td>";
+echo "<td><input label='A1_reserva'name='A1_reserva'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_certmil'>Cert Militar</label></td>";
+echo "<td><input label='A1_certmil'name='A1_certmil'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_certserie'>Cert Serie</label></td>";
+echo "<td><input label='A1_certserie'name='A1_certserie'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_certcateg'>Cert Categoria</label></td>";
+echo "<td><input label='A1_certcateg'name='A1_certcateg'type='text'value=''size='20' maxlength='20'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_seguro'>Seguro </label></td>";
+echo "<td><input label='Seguro'name='A1_seguro'type='text'value=''size='50' > </td></tr>";
+echo "<tr><td width='110'><label for='A1_convenio'>Convénio </label></td>";
+echo "<td><input label='Convenio'name='A1_convenio'type='text'value=''size='50'> </td></tr>";
+echo "</table>";
+echo "</div>";
+echo '<div class="simpleTabsContent">';
+echo "<table border=0 bgcolor='#E6E6E6' width='100%'>";
+echo "<tr><td width='110'><label for='A1_nomepai'>Nome Pai </label></td>";
+echo "<td><input label='Nome Pai'name='A1_nomepai'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_nomemae'>Nome M&atilde;e </label></td>";
+echo "<td><input label='Nome M&atilde;e'name='A1_nomemae'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_nomeresp'>Resposável </label></td>";
+echo "<td><input label='Resposável'name='A1_nomeresp'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_endresp'>Endereço Resp </label></td>";
+echo "<td><input label='Endereço Resp'name='A1_endresp'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_bairresp'>Bairro Resp </label></td>";
+echo "<td><input label='Bairro Resp'name='A1_bairresp'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_minicresp'>Municipío Resp </label></td>";
+echo "<td><input label='Municipío Resp'name='A1_minicresp'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_estresp'>UF Resp </label></td>";
+echo "<td><select  label='UF Resp' name='A1_estresp' >" . lista_nest()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_cepresp'>Cep Resp </label></td>";
+echo "<td><input label='Cep Resp'name='A1_cepresp'type='text'value=''size='10' onkeypress='mascara(this,cep)' maxlength='10' > </td></tr>";
+echo "</table>";
+echo "</div>";
+echo '<div class="simpleTabsContent">';
+echo "<table border=0 bgcolor='#E6E6E6' width='100%'>";
+echo "<tr><td width='110'><label for='A1_forming'>Forma Ingresso</label></td>";
+echo "<td><select  label='A1_forming' name='A1_forming'>" . lista_formaingresso()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_anoing'>Ano Ingresso</label></td>";
+echo "<td><input label='A1_anoing'name='A1_anoing'type='text'value='[var._SESSION.anopric]'size='4' maxlength='4' Req='true' Camp='Ano Ingresso' onkeypress='mascara(this,soNumeros)'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_anoing'>Sem Ingresso</label></td>";
+echo "<td><input label='A1_seming'name='A1_seming'type='text'value='[var._SESSION.sempric]'size='2' maxlength='2' Req='true' Camp='Sem Ingresso' onkeypress='mascara(this,soNumeros)'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_discvest1'>Disc Vest1</label></td>";
+echo "<td><input label='A1_discvest1'name='A1_discvest1'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_discvest2'>Disc Vest2</label></td>";
+echo "<td><input label='A1_discvest2'name='A1_discvest2'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_ensinomed'>Escola Medio</label></td>";
+echo "<td><input label='A1_ensinomed'name='A1_ensinomed'type='text'value=''size='50'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_minicmed'>Municipío Medio</label></td>";
+echo "<td><input label='A1_minicmed'name='A1_minicmed'type='text'value=''size='30'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_estmed'>UF Medio </label></td>";
+echo "<td><select  label='A1_estmed' name='A1_estme' >" . lista_nest()."</select></td></tr>";
+echo "<tr><td width='110'><label for='A1_anomed'>Ano Medio</label></td>";
+echo "<td><input label='A1_anomed'name='A1_anomed'type='text'value=''size='4' maxlength='4' onkeypress='mascara(this,soNumeros)'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_dataenem'>Data Enem</label></td>";
+echo '<td><input label="A1_dataenem" name="A1_dataenem"type="text" value="" size="10" onkeypress="mascara(this,data)" maxlength="10" > </td></tr>';
+echo "</table>";
+echo "</div>";
+echo '<div class="simpleTabsContent">';
+echo "<table border=0 bgcolor='#E6E6E6' width='100%'>";
+echo "<tr><td width='110'><label for='A1_dataconcl'>Data Conclusão</label></td>";
+echo '<td><input label="A1_dataconcl" name="A1_dataconcl"type="text"value="" size="10" onkeypress="mascara(this,data)" maxlength="10"> </td></tr>';
+echo "<tr><td width='110'><label for='A1_datacola'>Data Conclusão</label></td>";
+echo '<td><input label="A1_datacola" name="A1_datacola"type="text"value="" size="10" onkeypress="mascara(this,data)" maxlength="10"> </td></tr>';
+echo "<tr><td width='110'><label for='A1_dataexped'>Data Exp. Diploma</label></td>";
+echo '<td><input label="A1_dataexped" name="A1_dataexped"type="text"value="" size="10" onkeypress="mascara(this,data)" maxlength="10"> </td></tr>';
+echo "<tr><td width='110'><label for='A1_chcump'>CH Cumprida</label></td>";
+echo "<td><input label='A1_chcump'name='A1_chcump'type='text'value='0'size='10' maxlength='10' onkeypress='mascara(this,soNumeros)'> </td></tr>";
+echo "<tr><td width='110'><label for='A1_enad'>Enad</label></td>";
+echo "<td><input label='A1_enad'name='A1_enad'type='text'value=''size='50'> </td></tr>";
+echo "</table></div>";
+echo "<table>";
+echo "<tr><td><input name='idsecao'type='hidden'value='A1IU'size='2'></td></tr>";
+echo "<tr><td><input name='formant'type='hidden'value='1S'size='2'></td></tr>";
+echo "<tr><td><input name='formpesq'type='hidden'value='2S'size='2'></td></tr>";
+echo "</table>";
+echo '<table><tr><td><input name="voltar" type="button" id="button" onClick="javascript:history.back();" value="Voltar"></td><td><input name="enviar" id="button" type="submit" value="Enviar" ></td></tr></table></form></div></div>';
+?>
+
+

@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+ <TITLE>Novo Documento</TITLE>
+<link rel="stylesheet" type="text/css" href="cadastro.css" />
+</HEAD>
+<BODY>
+<form title="Aluno" name="f_input.php" action="index.php" method="get" >
+<fieldset title="Dados Cadastrais" id="fieldset1" >
+<legend>Dados Cadastrais</legend>
+<label for="t3_nome">Nome&nbsp
+<input label="Nome" name="t3_nome" type="text" value="" size="50" >
+<label for="t3_end">Endereço&nbsp
+<input label="Endereço" name="t3_end" type="text" value="" size="50" >
+<label for="t3_bar">Bairro&nbsp
+<input label="Bairro" name="t3_bar" type="text" value="" size="30" ></label>
+<label for="t3_cid">Cidade&nbsp
+<input label="Cidade" name="t3_cid" type="text" value="" size="30" ></label>
+<label for="t3_est">UF&nbsp
+<select label="UF" name="t3_est" >
+<option value="SP" >São Paulo</option><option value="RJ" selected>Rio de Janeiro</option>
+<option value="RS"  >Rio Grande do Sul</option><option value="MG"  >Minas Gerais</option>
+<option value="DF"  >Distrito Federal</option></select></label>
+<label for="t3_cep">Cep&nbsp
+<input label="Cep" name="t3_cep" type="text" value="" size="8" ></label>
+<label for="t3_sex">Sexo&nbsp
+<select label="Sexo" name="t3_sex" >
+<option value="F" >Feminino</option>
+<option value="M" selected>Masculino</option></select></label>
+<label for="t3_fone">Fone&nbsp
+<input label="Fone" name="t3_fone" type="text" value="" size="12" ></label>
+<label for="t3_mail">E-m@il&nbsp
+<input label="E-m@il" name="t3_mail" type="text" value="" size="30" ></label>
+<label for="idsecao">&nbsp </label><input name="idsecao" type="hidden" value="3" size="2" ><br>
+</fieldset>
+<input class="formFields" name="voltar" type="button" onClick="javascript:history.back();" value="Voltar">
+<input name="limpar" type="reset" value="Limpar">
+<input name="enviar" type="submit" value="Enviar">
+</form>
+
+</BODY>
+</HTML>

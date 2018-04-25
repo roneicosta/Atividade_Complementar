@@ -1,0 +1,43 @@
+.ftitulo {font-family: verdana; font-weight: bold; font-size: 12px;}
+
+.ftexto {font-family: verdana; font-size: 12px;}
+
+.borda {border-width:1px;
+/*line-height:8px;*/
+border-style: solid;
+border-color: #000000;
+border-collapse:collapse; }
+
+.linhaint {line-height:16px;
+border-top-width:1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-right-width: 0px;
+border-style: solid;
+border-color: #000000;
+border-collapse:collapse;
+font-family: verdana;
+font-size: 12px; }
+
+.linhaint_tit {line-height:14px;
+border-top-width:1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-right-width: 0px;
+border-style: solid;
+border-color: #000000;
+border-collapse:collapse;
+font-family: verdana;
+font-size: 12px;
+font-weight: bold; }
+
+.bordebaixo {
+border-width:1px;
+border-top-width:0px;
+border-bottom-width: 1px;
+border-left-width: 0px;
+border-right-width: 0px;
+border-style: solid;
+border-color: #000000;
+border-collapse:collapse;
+}

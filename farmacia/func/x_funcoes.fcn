@@ -1,0 +1,527 @@
+<?php
+/*function firebird() {
+ $conexao = ibase_connect('192.168.1.244:D:/BD/NOSSOCONFIG.ZWZ','SYSDBA', 'masterkey');
+ return $conexao;
+}*/
+  
+/* Função que Calcula a Data atual  */
+function data(){
+  $dia = date(d);
+  $mes = date(m);
+  $ano = date(Y);
+  $data_atu = $dia."/".$mes."/".$ano;
+  
+  return $data_atu;
+}
+
+function formata_data($data)
+{
+ //recebe o parâmetro e armazena em um array separado por -
+ $data = explode('/', $data);
+ //armazena na variavel data os valores do vetor data e concatena /
+ $data = $data[1].'/'.$data[0].'/'.$data[2];
+
+ //retorna a string da ordem correta, formatada
+ return $data;
+}
+  
+function data_atual ()  {
+      $dias = array ("Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado");
+	  
+	  $dia = DATE("d");
+	  $mes = DATE("m");
+	  $ano = DATE("Y");
+	  $dia_sem = DATE("w");
+	  
+  switch ($mes) {
+      case 01;
+        $meses = "Janeiro";
+        break;
+	  case 02;
+        $meses = "Fevereiro";
+        break;
+	  case 03;
+        $meses = "Março";
+        break;
+	  case 04;
+        $meses = "Abril";
+        break;		
+	  case 05;
+        $meses = "Maio";
+        break;	
+	  case 06;
+        $meses = "Junho";
+        break;	
+	 case 07;
+        $meses = "Julho";
+        break;
+	 case 08;
+        $meses = "Agosto";
+        break;	
+	 case 09;
+        $meses = "Setembro";
+        break;
+	 case 10;
+        $meses = "Outubro";
+        break;
+	 case 11;
+        $meses = "Novembro";
+        break;				
+     case 12;
+        $meses = "Dezembro";
+        break;
+} 
+	 
+	  $data_extensa = $dias[$dia_sem] . " $dia de " . $meses . " de $ano";
+	  
+      RETURN $data_extensa;
+  }	 
+
+/* Função que gera uma lista de Estados (UF)  */
+
+function f_selectedfilial($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['M1_ID'] == $_SESSION['filialpric']) {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_selectedcurso($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['A2_ID'] == $_SESSION['cursopric']) {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_selectedemp($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['M0_ID'] == '00') {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_cor($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['AB_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['AB_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['AB_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['AB_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_cor_pre($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['BB_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['BB_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['BB_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['BB_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_cor_his($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['A9_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['A9_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['A9_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['A9_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_dia($Name,&$CurrRec,$RecNum) {
+global $dia;
+if ($CurrRec['A8_DIA'] == '1') {
+    $CurrRec['dia'] = 'Domingo';}
+elseif ($CurrRec['A8_DIA'] == '2'){
+    $CurrRec['dia'] = 'Segunda-feira';}
+elseif ($CurrRec['A8_DIA'] == '3'){
+    $CurrRec['dia'] = 'Terça-feira';}
+elseif ($CurrRec['A8_DIA'] == '4'){
+    $CurrRec['dia'] = 'Quarta-feira';}
+elseif ($CurrRec['A8_DIA'] == '5'){
+    $CurrRec['dia'] = 'Quinta-feira';}
+elseif ($CurrRec['A8_DIA'] == '6'){
+    $CurrRec['dia'] = 'Sexta-feira';}
+else{$CurrRec['dia'] = 'Sabado';};
+};
+
+function lista_sexo($sexos)  {
+         $sex = array ("M" => "Masculino", "F" => "Femenino");
+	      foreach ($sex as $siglasex => $descsex) {
+                  if ($siglasex == $sexos){
+                    $sexo .= "<option selected>".$descsex;
+                  }
+                  else{
+                   $sexo .= "<option value=\"$siglasex\"" .$Sel.">$descsex</option>\n";
+                  }
+			}
+         RETURN $sexo;
+  }
+  
+function lista_turno($turno)  {
+         $tur = array ("D" => "Diurno", "M" => "Matutino",
+                       "V" => "Vespertino", "N" => "Noturno");
+	      foreach ($tur as $siglatur => $desctur) {
+                  if ($siglatur == $turno){
+                    $turno .= "<option selected>".$desctur;
+                  }
+                  else{
+                   $turno .= "<option value=\"$siglatur\"" .$Sel.">$desctur</option>\n";
+                  }
+			}
+         RETURN $turno;
+  }
+
+function lista_estcivil($estacivil)  {
+         $civil = array ("S" => "Solteiro", "C" => "Casado", "V" => "Viúvo", "D" => "Divorciado");
+	      foreach ($civil as $siglaest => $desccivil) {
+                  if ($siglaest == $estacivil){
+                    $estcivil .= "<option selected>".$desccivila;
+                  }
+                  else{
+                   $estcivil .= "<option value=\"$siglaest\"" .$Sel.">$desccivil</option>\n";
+                  }
+			}
+         RETURN $estcivil;
+  }
+  
+function arredonda($arred)  {
+         $arredon = array ("01" => "TPRound 01", "02" => "TPRound 02", "03" => "TPRound 03");
+	      foreach ($arredon as $siglaarred => $descarred) {
+                  if ($siglaarred == $arred){
+                    $round .= "<option selected>".$descarred;
+                  }
+                  else{
+                   $round .= "<option value=\"$siglaarred\"" .$Sel.">$descarred</option>\n";
+                  }
+			}
+         RETURN $round;
+  }  
+  
+function lista_formaingresso($foring)  {
+         $forma = array ("S" => "Processo Seletivo", "D" => "Portador de Diploma",
+                         "E" => "Entrevista", "T" => "Transferência", "P" => "ProUni",
+                         "C" => "Certidão de estudos", "I" => "Transferência interna",
+                         "M" => "Enem");
+	      foreach ($forma as $siglaforma => $descforma) {
+                  if ($siglaforma == $foring){
+                    $formaingresso .= "<option selected>".$descforma;
+                  }
+                  else{
+                   $formaingresso .= "<option value=\"$siglaforma\"" .$Sel.">$descforma</option>\n";
+                  }
+			}
+         RETURN $formaingresso;
+  }
+  
+function lista_situacao($sit)  {
+         $situa = array ("AC" => "Abandono de curso", "TI" => "Transferência interna",
+                         "TR" => "Trancado", "TC" => "Transferência", "CA" => "Cancelado",
+                         "RE" => "Reativação matrícula", "FR" => "Formado");
+	      foreach ($situa as $siglasit => $descsit) {
+                  if ($siglasit == $sit){
+                    $situacao .= "<option selected>".$descsit;
+                  }
+                  else{
+                   $situacao .= "<option value=\"$siglasit\"" .$Sel.">$descsit</option>\n";
+                  }
+			}
+         RETURN $situacao;
+  }
+  
+function lista_situacao_his($sit)  {
+         $situa = array ("AP" => "Aprovado", "AC" => "Abandono", "CA" => "Cancelado",
+		                 "CR" => "Cursando", "RR" => "Reprovado", "RF" => "Reprovado Falta",
+						 "TI" => "Transferência interna", "TR" => "Trancado", "TC" => "Transferência");
+	      foreach ($situa as $siglasit => $descsit) {
+                  if ($siglasit == $sit){
+                    $situacao .= "<option selected>".$descsit;
+                  }
+                  else{
+                   $situacao .= "<option value=\"$siglasit\"" .$Sel.">$descsit</option>\n";
+                  }
+			}
+         RETURN $situacao;
+  }  
+  
+function lista_motivo($mot)  {
+         $motiv = array ("0" => "Não informou", "1" => "Indisponibilidade financeira",
+                         "2" => "Insatisfação curso", "3" => "Insatisfação instituição", "4" => "Mudança de cidade",
+                         "5" => "Dificuldade locomoção", "6" => "Problemas com horário", "A" => "Conquista de bolsa",
+                         "B" => "Melhora financeira", "C" => "Necessidade profissional", "D" => "Problemas familiares",
+                         "X" => "Outros");
+	      foreach ($motiv as $siglamot => $descmot) {
+                  if ($siglamot == $mot){
+                    $motivo .= "<option value=\"$siglamot\" selected>".$descmot;
+                  }
+                  else{
+                   $motivo .= "<option value=\"$siglamot\"" .$Sel.">$descmot</option>\n";
+                  }
+			}
+         RETURN $motivo;
+  }
+
+function lista_modalidade($mod)  {
+         $modal = array ("N" => "Normal", "V" => "Turma Verao",
+                         "E" => "Turma Especial", "A" => "Adaptação", "D" => "Dependência");
+	      foreach ($modal as $siglamod => $descmod) {
+                  if ($siglamod == $mod){
+                    $modalidade .= "<option selected>".$descmod;
+                  }
+                  else{
+                   $modalidade .= "<option value=\"$siglamod\"" .$Sel.">$descmod</option>\n";
+                  }
+			}
+         RETURN $modalidade;
+  }
+  
+function lista_regime($regime)  {
+         $regi = array ("P" => "Problema Saúde", "L" => "Licença-maternidade");
+	      foreach ($regi as $siglareg => $descreg) {
+                  if ($siglareg == $regime){
+                    $regesp .= "<option selected>".$descreg;
+                  }
+                  else{
+                   $regesp .= "<option value=\"$siglareg\"" .$Sel.">$descreg</option>\n";
+                  }
+			}
+         RETURN $regesp;
+  }
+
+function lista_diasemana($dia)  {
+         $dias = array ("2" => "Segunda-feira", "3" => "Terça-feira",
+                         "4" => "Quarta-feira", "5" => "Quinta-feira", "6" => "Sexta-feira",
+                         "7" => "Sábado", "1" => "Domingo");
+	      foreach ($dias as $sigladias => $descdias) {
+                  if ($sigladias == $dia){
+                    $diasem .= "<option selected>".$descdias;
+                  }
+                  else{
+                   $diasem .= "<option value=\"$sigladias\"" .$Sel.">$descdias</option>\n";
+                  }
+			}
+         RETURN $diasem;
+  }
+  
+function sim_nao($siglaSN)  {
+         $simnao = array ("N" => "Não", "S" => "Sim");
+	      foreach ($simnao as $siglasn => $descsn) {
+                  if ($siglasn == $siglaSN){
+                    $sim_nao .= "<option selected>".$descsn;
+                  }
+                  else{
+                   $sim_nao .= "<option value=\"$siglasn\"" .$Sel.">$descsn</option>\n";
+                  }
+			}
+         RETURN $sim_nao;
+  }
+  
+function nao_sim($siglaSN)  {
+         $simnao = array ("S" => "Sim","N" => "Não");
+	      foreach ($simnao as $siglasn => $descsn) {
+                  if ($siglasn == $siglaSN){
+                    $sim_nao .= "<option selected>".$descsn;
+                  }
+                  else{
+                   $sim_nao .= "<option value=\"$siglasn\"" .$Sel.">$descsn</option>\n";
+                  }
+			}
+         RETURN $sim_nao;
+  }
+  
+function formacurso($siglacur)  {
+         $forcurso = array ("S" => "Seriado", "C" => "Crédito");
+	      foreach ($forcurso as $siglafor => $descfor) {
+                  if ($siglafor == $siglacur){
+                    $sc .= "<option selected>".$descfor;
+                  }
+                  else{
+                   $sc .= "<option value=\"$siglafor\"" .$Sel.">$descfor</option>\n";
+                  }
+			}
+         RETURN $sc;
+  }
+
+function lista_nest($sigla)  {
+         $est = array ("AC" => "Acre", "AL" => "Alagoas", "AM" => "Amazonas",
+                       "AP" => "Amapa", "BA" => "Bahia", "CE" => "Ceará",
+					   "ES" => "Espirito Santo", "MA" => "Maranhão", "GO" => "Goiás",
+					   "MG" => "Minas Gerais", "PA" => "Pará", "PI" => "Piauí",
+					   "DF" => "Distrito Federal", "RR" => "Roraima", "SP" => "São Paulo",
+					   "RJ" => "Rio de Janeiro", "MT" => "Mato Grosso", "PR" => "Paraná",
+					   "MS" => "Mato Grosso do Sul", "RS" => "Rio Grande do Sul",
+					   "RN" => "Rio Grande do Norte", "SC" => "Santa Catarina",
+					   "SE" => "Sergipe", "TO" => "Tocantins", "RO" => "Rondônia",
+					   "PB" => "Paraíba", "PE" => "Pernambuco");
+
+          foreach ($est as $uf => $desc) {
+                  if ($uf == $sigla){
+                    $NomeEst .= "<option value='".$uf."'selected>".$desc;
+                  }
+                  else{
+                   $NomeEst .= "<option value=\"$uf\"" .$Sel.">$desc</option>\n";
+                  }
+			}
+         RETURN $NomeEst;
+  }
+  
+function lista_ano($ano)  {
+         $anos = array ("2010" => "2010", "2009" => "2009", "2008" => "2008",
+                       "2007" => "2007", "2006" => "2006", "2005" => "2005",
+					   "2004" => "2004", "2003" => "2003", "2002" => "2002",
+					   "2001" => "2001", "2000" => "2000", "1999" => "1999",
+					   "1998" => "1998", "1997" => "1997", "1996" => "1996",
+					   "1995" => "1995");
+
+          foreach ($anos as $siglaano => $descano) {
+                  if ($siglaano == $ano){
+                    $anoatu .= "<option selected>".$descano;
+                  }
+                  else{
+                   $anoatu .= "<option value=\"$siglaano\"" .$Sel.">$descano</option>\n";
+                  }
+			}
+
+         RETURN $anoatu;
+  }
+  
+function lista_sem($sem)  {
+         $sems = array ("0" => "0", "1" => "1", "2" => "2");
+
+          foreach ($sems as $siglasem => $descsem) {
+                  if ($siglasem == $sem){
+                    $sematu .= "<option selected>".$descsem;
+                  }
+                  else{
+                   $sematu .= "<option value=\"$siglasem\"" .$Sel.">$descsem</option>\n";
+                  }
+			}
+
+         RETURN $sematu;
+  }
+  
+function lista_ordem($ordem)  {
+         $order = array ("1" => "Alfabética", "2" => "Matrícula", "3" => "Posição");
+
+          foreach ($order as $siglaord => $descord) {
+                  if ($siglaord == $ordem){
+                    $ordens .= "<option selected>".$descord;
+                  }
+                  else{
+                   $ordens .= "<option value=\"$siglaord\"" .$Sel.">$descord</option>\n";
+                  }
+			}
+
+         RETURN $ordens;
+  }  
+  
+function get_ip()
+{   $variables = array('REMOTE_ADDR',
+                      'HTTP_X_FORWARDED_FOR',
+                      'HTTP_X_FORWARDED',
+                      'HTTP_FORWARDED_FOR',
+                      'HTTP_FORWARDED',
+                      'HTTP_X_COMING_FROM',
+                      'HTTP_COMING_FROM',
+                      'HTTP_CLIENT_IP');
+
+   $return = 'Unknown';
+
+   foreach ($variables as $variable)
+   {
+       if (isset($_SERVER[$variable]))
+       {
+           $return = $_SERVER[$variable];
+           break;
+       }
+   }
+   
+   return $return;
+}  
+  
+function abreviar_nome ($nome)
+{
+// divide o nome pelo espaço entre os mesmos
+$partes_nome     = explode (" ",trim($nome));
+// pega o total de palavras do nome
+$total             = count($partes_nome);
+$vetor_ignora     = array('de', 'da', 'das', 'do', 'dos');
+
+foreach ($partes_nome as $indice =>$palavras)
+{
+  // nao permite que seja abreviado o primeiro, nem o ultimo nome
+  if ($indice!=0 and $indice!=($total-1) )
+      // verifica se 'de', 'do' ou otras ligações estão presentes no nome
+      if (in_array($palavras,$vetor_ignora))
+      {
+          $nome_abrv .= " ".$palavras;          
+      } else {          
+          $nome_abrv.= " ". strtoupper(substr($palavras,0,1)).".";          
+      }
+}
+
+$abreviado = ucfirst($partes_nome[0])." ".$nome_abrv." ".ucfirst($partes_nome[$total-1]);
+
+return $abreviado;
+}
+  
+function limitch($value,$lenght){
+         if (strlen($value) >= $lenght ){
+                  $limited = substr($value,0,$lenght);
+                  $limited .= "...";
+         }
+         return $limited;
+  }
+//limit chars reversed
+function limitchrev($value,$lenght){
+         if (strlen($value) >= $lenght ){
+                  $start = strlen($value)- $lenght;
+                  $limited = "...";
+                  $limited .= substr($value,$start,$lenght);
+         }
+         return $limited;
+  }
+
+ function mens($cod)
+       {
+       		switch ($cod)
+            	{	case 0:  // Conexao com banco com problemas, usuario ou senha
+						$mens = "<b>Erro na Conexao com o MySQL</b>";
+                        break;
+                    case 1:  //Banco de Dados nao existe
+						$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    				Dados Socios - ".mysql_error() ."</b>";
+                        break;
+                    case 2:  // Nao consegui incluir o registro
+                    	$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    			Dados Sócios - ".mysql_error() ."<br> ".
+                    			"Nao conseguiu cadastrar. "."<br>".
+                    			$sql."</b>";
+					case 3:  // Nao conseguiu incluir registro
+                    	$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    			Dados Sócios - ".mysql_error() ."<br> ".
+                    			"Nao conseguiu cadastrar. "."<br>".
+                    			$sql."</b>";
+                    case 4: // Cadastro com sucesso  com codigo
+                    	$mens = "<br><br><b>Parabens, seu cadastro foi executado
+    	   		 		com sucesso. <b>";
+                    case 5: // Alteracao com sucesso
+                    	$mens = "<br><br><b>Alterado com sucesso </b>";
+                    default:
+                    	 $mens = "Falhou";
+				}
+			return $mens;
+	   }
+	   
+?>

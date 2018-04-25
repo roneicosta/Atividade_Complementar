@@ -1,0 +1,882 @@
+<?php
+/*function firebird() {
+ $conexao = ibase_connect('192.168.1.244:D:/BD/NOSSOCONFIG.ZWZ','SYSDBA', 'masterkey');
+ return $conexao;
+}*/
+  
+/* Função que Calcula a Data atual  */
+function data(){
+  $dia = date(d);
+  $mes = date(m);
+  $ano = date(Y);
+  $data_atu = $dia."/".$mes."/".$ano;
+  
+  return $data_atu;
+}
+
+function formata_data($data)
+{
+ //recebe o parâmetro e armazena em um array separado por -
+ $data = explode('/', $data);
+ //armazena na variavel data os valores do vetor data e concatena /
+ $data = $data[1].'/'.$data[0].'/'.$data[2];
+
+ //retorna a string da ordem correta, formatada
+ return $data;
+}
+ 
+function data_atual ()  {
+      $dias = array ("Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado");
+	  
+	  $dia = DATE("d");
+	  $mes = DATE("m");
+	  $ano = DATE("Y");
+	  $dia_sem = DATE("w");
+	  
+  switch ($mes) {
+      case 01;
+        $meses = "Janeiro";
+        break;
+	  case 02;
+        $meses = "Fevereiro";
+        break;
+	  case 03;
+        $meses = "Março";
+        break;
+	  case 04;
+        $meses = "Abril";
+        break;		
+	  case 05;
+        $meses = "Maio";
+        break;	
+	  case 06;
+        $meses = "Junho";
+        break;	
+	 case 07;
+        $meses = "Julho";
+        break;
+	 case 08;
+        $meses = "Agosto";
+        break;	
+	 case 09;
+        $meses = "Setembro";
+        break;
+	 case 10;
+        $meses = "Outubro";
+        break;
+	 case 11;
+        $meses = "Novembro";
+        break;				
+     case 12;
+        $meses = "Dezembro";
+        break;
+} 
+	 
+	  $data_extensa = $dias[$dia_sem] . " $dia de " . $meses . " de $ano";
+	  
+      RETURN $data_extensa;
+  }	 
+  
+function formata_data2($data)
+{
+ $data = explode('-', $data);
+ $data = $data[2].'/'.$data[1].'/'.$data[0];
+ return $data;
+}  
+
+function diasentre($dataini,$datafim){//Retorna o numero de dias entre duas datas
+  $dataini = explode('/', $dataini);
+  $datafim = explode('/', $datafim);
+  $dia_ini = $dataini[0];
+  $mes_ini = $dataini[1];
+  $ano_ini = $dataini[2];
+  $dia_fim = $datafim[0];
+  $mes_fim = $datafim[1];
+  $ano_fim = $datafim[2];
+  
+$dini = mktime(0,0,0,$mes_ini,$dia_ini,$ano_ini); // timestamp da data inicial
+$dfim = mktime(0,0,0,$mes_fim,$dia_fim,$ano_fim); // timestamp da data final
+ $dif = $dfim - $dini;
+/*while($dini <= $dfim) {      
+   //$dt = date("d/m/Y",$dini);//convertendo a data no formato dia/mes/ano
+   $i++;
+   //echo $dt."<br>"; //exibindo a data
+   $dini += 86400; // adicionando mais 1 dia (em segundos) na data inicial
+};*/
+return round($dif/86400);
+};
+
+function CalcularVencimento($data,$dias)
+{
+	$novadata = explode("/",$data);
+	$dia = $novadata[0];
+	$mes = $novadata[1];
+	$ano = $novadata[2];
+	//PARA DESCOBRIR QUAL DATA SERÁ DAQUI A 5 DIAS
+	//echo date('d/m/Y',mktime(0,0,0,$mes,$dia+5,$ano));
+	//PARA DESCOBRIR QUAL SERÁ O DIA AMANHÃ
+	//echo date('d/m/Y',mktime(0,0,0,$mes,$dia+1,$ano));
+	//PARA MÊS QUE VEM
+	//echo date('d/m/Y',mktime(0,0,0,$mes + 1,$dia,$ano));
+	//PARA ANO QUE VEM
+	//echo date('d/m/Y',mktime(0,0,0,$mes,$dia,$ano + 1));
+	if ($dias==0)
+	{return date('d/m/Y',mktime(0,0,0,$mes,$dia,$ano));}
+	else
+	{return date('d/m/Y',mktime(0,0,0,$mes+$dias,$dia,$ano));}
+}
+
+function f_dias_aberto($Name,&$CurrRec,$RecNum) {
+global $dias;
+    $CurrRec['dias'] = diasentre(formata_data2($CurrRec['F1_DTVENCTO']),data()); 
+};
+
+function f_vl_apagar($Name,&$CurrRec,$RecNum){
+global $vlapag;
+	
+ if (($CurrRec['F1_VALDESC1'] > 0) and ($CurrRec['F1_DTDESC1'] != '')) {
+   $dd1 = diasentre(formata_data2($CurrRec['F1_DTDESC1']),data());};
+ if(($CurrRec['F1_VALDESC2'] > 0) and ($CurrRec['F1_DTDESC2'] != '')){
+   $dd2 = diasentre(formata_data2($CurrRec['F1_DTDESC2']),data());};
+ if(($CurrRec['F1_VALDESC3'] > 0) and ($CurrRec['F1_DTDESC3'] != '')){
+   $dd3 = diasentre(formata_data2($CurrRec['F1_DTDESC3']),data());};
+ if(($CurrRec['F1_VALDESC4'] > 0) and ($CurrRec['F1_DTDESC4'] != '')){
+   $dd4 = diasentre(formata_data2($CurrRec['F1_DTDESC4']),data());};
+ if( $CurrRec['F1_VALDESC1'] == '' and $CurrRec['F1_VALDESC2'] == '' and $CurrRec['F1_VALDESC3'] == '' and $CurrRec['F1_VALDESC4'] == ''){
+ 	 $dtd = '';
+	 $vld = 0;
+	 $dd5 = 1;};
+		 	  
+ if ($dd5 == 0){
+	 if ($dd1 <= 0){
+	 	$dtd = $CurrRec['F1_DTDESC1'];
+		$vld = $CurrRec['F1_VALDESC1'];}
+	 elseif(($dd1 > 0) and ($dd2 <= 0) ){
+		$dtd = $CurrRec['F1_DTDESC2'];
+		$vld = $CurrRec['F1_VALDESC2'];}
+	 elseif(($dd2 > 0) and ($dd3 <= 0) ){
+		$dtd = $CurrRec['F1_DTDESC3'];
+		$vld = $CurrRec['F1_VALDESC3'];}     
+	 elseif(($dd3 > 0) and ($dd4 <= 0) ){
+		$dtd = $CurrRec['F1_DTDESC4'];
+		$vld = $CurrRec['F1_VALDESC4'];}
+	 else{$dtd = '';
+	      $vld = 0;};};
+	      
+ $da = diasentre(formata_data2($CurrRec['F1_DTVENCTO']),data());
+  
+ if($da > 0){
+   $vlm = ($CurrRec['F1_VLPAGAR'] * $CurrRec['F1_PMULTA']) / 100; 
+   $vlj = (((($CurrRec['F1_PJUROS']/30) * $da))* $CurrRec['F1_VLPAGAR']) / 100;} 
+ else{$vlm = 0;
+      $vlj = 0;}         
+
+ if($da > 0){
+   $CurrRec['vlapag'] = $CurrRec['F1_VLPAGAR'] + $vlm + $vlj - $CurrRec['F1_VLBOLSA'];}
+ else{
+   $CurrRec['vlapag'] = $CurrRec['F1_VLPAGAR'] + $vlm + $vlj - $CurrRec['F1_VLBOLSA'] - $vld;};
+   
+};
+
+function f_da_vla($Name,&$CurrRec,$RecNum){
+global $vlapag,$dias;
+  $CurrRec['vlapag2'] = f_vl_apagar($Name,&$CurrRec,$RecNum);
+  $CurrRec['dias2']   = f_dias_aberto($Name,&$CurrRec,$RecNum);	
+};
+
+function f_selectedfilial($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['M1_ID'] == $_SESSION['filialpric']) {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_selectedcurso($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['A2_ID'] == $_SESSION['cursopric']) {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_selectedemp($Name,&$CurrRec,$RecNum) {
+global $seleciona;
+if ($CurrRec['M0_ID'] == '00') {
+    $CurrRec['seleciona'] = 'selected';}
+else{$CurrRec['seleciona'] = '';};
+};
+
+function f_numreg($Name,&$CurrRec,$RecNum) {
+global $numreg;
+    $CurrRec['numreg'] = $RecNum;
+};
+
+function f_somajm($Name,&$CurrRec,$RecNum) {
+global $jm,$cor;
+  $CurrRec['jm'] = ($CurrRec['FF_JUROS'] + $CurrRec['FF_MULTA']); 
+  if (($RecNum % 2) == 0 ){
+    $CurrRec['cor'] = "ZA";}
+  else {$CurrRec['cor'] = "ZB";}; 
+}
+
+function f_somajm2($Name,&$CurrRec,$RecNum) {
+global $jm;
+  $CurrRec['jm'] = ($CurrRec['F1_VLJUROSBX'] + $CurrRec['F1_VLMULTABX']); 
+  return $CurrRec['jm'];  
+}
+
+
+function f_anosem($Name,&$CurrRec,$RecNum) {
+global $anosem;
+    $CurrRec['anosem'] = $CurrRec['F1_ANO'].$CurrRec['F1_SEMESTRE'];
+    return $CurrRec['anosem'];
+};
+
+function f_asf($Name,&$CurrRec,$RecNum){
+global $anosem2,$formapag2,$jm2;	
+  $CurrRec['anosem2'] = f_anosem($Name,&$CurrRec,$RecNum);
+  $CurrRec['formapag2'] = f_formapagto($Name,&$CurrRec,$RecNum);
+  $CurrRec['jm2'] = f_somajm2($Name,&$CurrRec,$RecNum);	
+};
+
+function f_zebra($Name,&$CurrRec,$RecNum) {
+global $cor;
+  if (($RecNum % 2) == 0 ){
+    $CurrRec['cor'] = "ZA";}
+  else {$CurrRec['cor'] = "ZB";}; 
+};
+
+function f_cor($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['AB_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['AB_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['AB_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['AB_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_cor_pre($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['BB_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['BB_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['BB_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['BB_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_cor_his($Name,&$CurrRec,$RecNum) {
+global $cor;
+if ($CurrRec['A9_MODAL'] == 'E') {
+    $CurrRec['cor'] = 'E';}
+elseif ($CurrRec['A9_MODAL'] == 'D'){
+    $CurrRec['cor'] = 'D';}
+elseif ($CurrRec['A9_MODAL'] == 'A'){
+    $CurrRec['cor'] = 'A';}
+elseif ($CurrRec['A9_MODAL'] == 'V'){
+    $CurrRec['cor'] = 'V';}
+else{$CurrRec['cor'] = 'N';};
+};
+
+function f_dia($Name,&$CurrRec,$RecNum) {
+global $dia;
+if ($CurrRec['A8_DIA'] == '1') {
+    $CurrRec['dia'] = 'Domingo';}
+elseif ($CurrRec['A8_DIA'] == '2'){
+    $CurrRec['dia'] = 'Segunda-feira';}
+elseif ($CurrRec['A8_DIA'] == '3'){
+    $CurrRec['dia'] = 'Terça-feira';}
+elseif ($CurrRec['A8_DIA'] == '4'){
+    $CurrRec['dia'] = 'Quarta-feira';}
+elseif ($CurrRec['A8_DIA'] == '5'){
+    $CurrRec['dia'] = 'Quinta-feira';}
+elseif ($CurrRec['A8_DIA'] == '6'){
+    $CurrRec['dia'] = 'Sexta-feira';}
+else{$CurrRec['dia'] = 'Sabado';};
+};
+
+function f_formapagto($Name,&$CurrRec,$RecNum){
+global $formapag;
+  if ($CurrRec['F1_VLPAGO'] > 0 ){
+  if ($CurrRec['F1_FPAGTO'] == 'DN' ){
+    $CurrRec['formapag'] =	"Dinheiro";}
+  elseif ($CurrRec['F1_FPAGTO'] == 'CH'){
+    $CurrRec['formapag'] = 'Cheque';}
+  elseif ($CurrRec['F1_FPAGTO'] == 'CP'){
+    $CurrRec['formapag'] = 'Cheque Pré';}
+  elseif ($CurrRec['F1_FPAGTO'] == 'PE'){
+    $CurrRec['formapag'] = 'Permuta';}
+  elseif ($CurrRec['F1_FPAGTO'] == 'PR'){
+    $CurrRec['formapag'] = 'Promissoria';}
+  elseif ($CurrRec['F1_FPAGTO'] == 'OP'){
+    $CurrRec['formapag'] = 'Ordem Pag';}
+  elseif ($CurrRec['F1_FPAGTO'] == 'BA'){
+    $CurrRec['formapag'] = 'Banco';} 
+  elseif ($CurrRec['F1_FPAGTO'] == 'NE'){
+    $CurrRec['formapag'] = 'Negociado';} 	   
+  else{$CurrRec['formapag'] = 'Cobrança';};
+  }
+  else{$CurrRec['formapag'] = '';};
+  return $CurrRec['formapag'];
+};
+
+
+function lista_sexo($sexos)  {
+         $sex = array ("M" => "Masculino", "F" => "Femenino");
+	      foreach ($sex as $siglasex => $descsex) {
+                  if ($siglasex == $sexos){
+                    $sexo .= "<option selected>".$descsex;
+                  }
+                  else{
+                   $sexo .= "<option value=\"$siglasex\"" .$Sel.">$descsex</option>\n";
+                  }
+			}
+         RETURN $sexo;
+  }
+  
+function lista_turno($turno)  {
+         $tur = array ("D" => "Diurno", "M" => "Matutino",
+                       "V" => "Vespertino", "N" => "Noturno");
+	      foreach ($tur as $siglatur => $desctur) {
+                  if ($siglatur == $turno){
+                    $turno .= "<option selected>".$desctur;
+                  }
+                  else{
+                   $turno .= "<option value=\"$siglatur\"" .$Sel.">$desctur</option>\n";
+                  }
+			}
+         RETURN $turno;
+  }
+
+function lista_estcivil($estacivil)  {
+         $civil = array ("S" => "Solteiro", "C" => "Casado", "V" => "Viúvo", "D" => "Divorciado");
+	      foreach ($civil as $siglaest => $desccivil) {
+                  if ($siglaest == $estacivil){
+                    $estcivil .= "<option selected>".$desccivila;
+                  }
+                  else{
+                   $estcivil .= "<option value=\"$siglaest\"" .$Sel.">$desccivil</option>\n";
+                  }
+			}
+         RETURN $estcivil;
+  }
+  
+function lista_titulacao($titulacao)  {
+         $titulo = array ("G" => "Graduação", "O" => "Pós-graduação", "M" => "Mestre", 
+		                  "E" => "Especialista", "D" => "Doutor", "H" => "PHD", 
+						  "P" => "Pós-doutorado");
+	      foreach ($titulo as $siglatit => $desctitulo) {
+                  if ($siglatit == $titulacao){
+                    $titula .= "<option selected>".$desctitulo;
+                  }
+                  else{
+                   $titula .= "<option value=\"$siglatit\"" .$Sel.">$desctitulo</option>\n";
+                  }
+			}
+         RETURN $titula;
+  }  
+  
+function lista_modelo_Etq($etqs)  {
+         $etq = array ("1" => "Modelo 1", "2" => "Modelo 2");
+	      foreach ($etq as $idetq => $descetq) {
+                  if ($idetq == $etqs){
+                    $etq .= "<option selected>".$descetq;
+                  }
+                  else{
+                   $etq .= "<option value=\"$siglaetq\"" .$Sel.">$descetq</option>\n";
+                  }
+			}
+         RETURN $etq;
+  }
+  
+  
+function arredonda($arred)  {
+         $arredon = array ("01" => "TPRound 01", "02" => "TPRound 02", "03" => "TPRound 03");
+	      foreach ($arredon as $siglaarred => $descarred) {
+                  if ($siglaarred == $arred){
+                    $round .= "<option selected>".$descarred;
+                  }
+                  else{
+                   $round .= "<option value=\"$siglaarred\"" .$Sel.">$descarred</option>\n";
+                  }
+			}
+         RETURN $round;
+  }  
+  
+function lista_formaingresso($foring)  {
+         $forma = array ("S" => "Processo Seletivo", "D" => "Portador de Diploma",
+                         "E" => "Entrevista", "T" => "Transferência", "P" => "ProUni",
+                         "C" => "Certidão de estudos", "I" => "Transferência interna",
+                         "M" => "Enem");
+	      foreach ($forma as $siglaforma => $descforma) {
+                  if ($siglaforma == $foring){
+                    $formaingresso .= "<option selected>".$descforma;
+                  }
+                  else{
+                   $formaingresso .= "<option value=\"$siglaforma\"" .$Sel.">$descforma</option>\n";
+                  }
+			}
+         RETURN $formaingresso;
+  }
+  
+function lista_situacao($sit)  {
+         $situa = array ("AC" => "Abandono de curso", "TI" => "Transferência interna",
+                         "TR" => "Trancado", "TC" => "Transferência", "CA" => "Cancelado",
+                         "RE" => "Reativação matrícula", "FR" => "Formado");
+	      foreach ($situa as $siglasit => $descsit) {
+                  if ($siglasit == $sit){
+                    $situacao .= "<option selected>".$descsit;
+                  }
+                  else{
+                   $situacao .= "<option value=\"$siglasit\"" .$Sel.">$descsit</option>\n";
+                  }
+			}
+         RETURN $situacao;
+  }
+  
+function lista_situacao_his($sit)  {
+         $situa = array ("AP" => "Aprovado", "AC" => "Abandono", "CA" => "Cancelado",
+		                 "CR" => "Cursando", "RR" => "Reprovado", "RF" => "Reprovado Falta",
+						 "TI" => "Transferência interna", "TR" => "Trancado", "TC" => "Transferência");
+	      foreach ($situa as $siglasit => $descsit) {
+                  if ($siglasit == $sit){
+                    $situacao .= "<option selected>".$descsit;
+                  }
+                  else{
+                   $situacao .= "<option value=\"$siglasit\"" .$Sel.">$descsit</option>\n";
+                  }
+			}
+         RETURN $situacao;
+  }  
+  
+function lista_motivo($mot)  {
+         $motiv = array ("0" => "Não informou", "1" => "Indisponibilidade financeira",
+                         "2" => "Insatisfação curso", "3" => "Insatisfação instituição", "4" => "Mudança de cidade",
+                         "5" => "Dificuldade locomoção", "6" => "Problemas com horário", "A" => "Conquista de bolsa",
+                         "B" => "Melhora financeira", "C" => "Necessidade profissional", "D" => "Problemas familiares",
+                         "X" => "Outros");
+	      foreach ($motiv as $siglamot => $descmot) {
+                  if ($siglamot == $mot){
+                    $motivo .= "<option value=\"$siglamot\" selected>".$descmot;
+                  }
+                  else{
+                   $motivo .= "<option value=\"$siglamot\"" .$Sel.">$descmot</option>\n";
+                  }
+			}
+         RETURN $motivo;
+  }
+
+function lista_modalidade($mod)  {
+         $modal = array ("N" => "Normal", "V" => "Turma Verao",
+                         "E" => "Turma Especial", "A" => "Adaptação", "D" => "Dependência");
+	      foreach ($modal as $siglamod => $descmod) {
+                  if ($siglamod == $mod){
+                    $modalidade .= "<option selected>".$descmod;
+                  }
+                  else{
+                   $modalidade .= "<option value=\"$siglamod\"" .$Sel.">$descmod</option>\n";
+                  }
+			}
+         RETURN $modalidade;
+  }
+  
+function lista_regime($regime)  {
+         $regi = array ("P" => "Problema Saúde", "L" => "Licença-maternidade");
+	      foreach ($regi as $siglareg => $descreg) {
+                  if ($siglareg == $regime){
+                    $regesp .= "<option selected>".$descreg;
+                  }
+                  else{
+                   $regesp .= "<option value=\"$siglareg\"" .$Sel.">$descreg</option>\n";
+                  }
+			}
+         RETURN $regesp;
+  }
+
+function lista_diasemana($dia)  {
+         $dias = array ("2" => "Segunda-feira", "3" => "Terça-feira",
+                         "4" => "Quarta-feira", "5" => "Quinta-feira", "6" => "Sexta-feira",
+                         "7" => "Sábado", "1" => "Domingo");
+	      foreach ($dias as $sigladias => $descdias) {
+                  if ($sigladias == $dia){
+                    $diasem .= "<option selected>".$descdias;
+                  }
+                  else{
+                   $diasem .= "<option value=\"$sigladias\"" .$Sel.">$descdias</option>\n";
+                  }
+			}
+         RETURN $diasem;
+  }
+  
+function sim_nao($siglaSN)  {
+         $simnao = array ("N" => "Não", "S" => "Sim");
+	      foreach ($simnao as $siglasn => $descsn) {
+                  if ($siglasn == $siglaSN){
+                    $sim_nao .= "<option selected>".$descsn;
+                  }
+                  else{
+                   $sim_nao .= "<option value=\"$siglasn\"" .$Sel.">$descsn</option>\n";
+                  }
+			}
+         RETURN $sim_nao;
+  }
+  
+function nao_sim($siglaSN)  {
+         $simnao = array ("S" => "Sim","N" => "Não");
+	      foreach ($simnao as $siglasn => $descsn) {
+                  if ($siglasn == $siglaSN){
+                    $sim_nao .= "<option selected>".$descsn;
+                  }
+                  else{
+                   $sim_nao .= "<option value=\"$siglasn\"" .$Sel.">$descsn</option>\n";
+                  }
+			}
+         RETURN $sim_nao;
+  }
+  
+function formacurso($siglacur)  {
+         $forcurso = array ("S" => "Seriado", "C" => "Crédito", "F" => "Fundamental", "M" => "Médio");
+	      foreach ($forcurso as $siglafor => $descfor) {
+                  if ($siglafor == $siglacur){
+                    $sc .= "<option selected>".$descfor;
+                  }
+                  else{
+                   $sc .= "<option value=\"$siglafor\"" .$Sel.">$descfor</option>\n";
+                  }
+			}
+         RETURN $sc;
+  }
+  
+function lista_formapagto($fpag)  {
+         $forma = array ("DN"=>"Dinheiro", "CH"=>"Cheque", "CP"=>"Cheque Pré", "PE"=>"Permuta", 
+		                  "PR"=>'Promissoria', "OP"=>"Ordem Pag", "BA"=>"Banco", "CO"=>"Cobrança");
+	      foreach ($forma as $siglaforp => $descforp) {
+                  if ($siglaforp == $fpag){
+                    $formapagto .= "<option selected>".$descforp;
+                  }
+                  else{
+                   $formapagto .= "<option value=\"$siglaforp\"" .$Sel.">$descforp</option>\n";
+                  }
+			}
+         RETURN $formapagto;
+  }  
+
+function lista_nest($sigla)  {
+         $est = array ("AC" => "Acre", "AL" => "Alagoas", "AM" => "Amazonas",
+                       "AP" => "Amapa", "BA" => "Bahia", "CE" => "Ceará",
+					   "ES" => "Espirito Santo", "MA" => "Maranhão", "GO" => "Goiás",
+					   "MG" => "Minas Gerais", "PA" => "Pará", "PI" => "Piauí",
+					   "DF" => "Distrito Federal", "RR" => "Roraima", "SP" => "São Paulo",
+					   "RJ" => "Rio de Janeiro", "MT" => "Mato Grosso", "PR" => "Paraná",
+					   "MS" => "Mato Grosso do Sul", "RS" => "Rio Grande do Sul",
+					   "RN" => "Rio Grande do Norte", "SC" => "Santa Catarina",
+					   "SE" => "Sergipe", "TO" => "Tocantins", "RO" => "Rondônia",
+					   "PB" => "Paraíba", "PE" => "Pernambuco");
+
+          foreach ($est as $uf => $desc) {
+                  if ($uf == $sigla){
+                    $NomeEst .= "<option value='".$uf."'selected>".$desc;
+                  }
+                  else{
+                   $NomeEst .= "<option value=\"$uf\"" .$Sel.">$desc</option>\n";
+                  }
+			}
+         RETURN $NomeEst;
+  }
+  
+function lista_ano($ano)  {
+         $anos = array("2018" => "2018", "2017" => "2017","2016" => "2016","2015" => "2015","2014" => "2014","2013" => "2013", "2012" => "2012", "2011" => "2011",
+		               "2010" => "2010", "2009" => "2009", "2008" => "2008",
+                       "2007" => "2007", "2006" => "2006", "2005" => "2005",
+					   "2004" => "2004", "2003" => "2003", "2002" => "2002",
+					   "2001" => "2001", "2000" => "2000", "1999" => "1999",
+					   "1998" => "1998", "1997" => "1997", "1996" => "1996",
+					   "1995" => "1995");
+
+          foreach ($anos as $siglaano => $descano) {
+                  if ($siglaano == $ano){
+                    $anoatu .= "<option selected>".$descano;
+                  }
+                  else{
+                   $anoatu .= "<option value=\"$siglaano\"" .$Sel.">$descano</option>\n";
+                  }
+			}
+
+         RETURN $anoatu;
+  }
+  
+function lista_sem($sem)  {
+         $sems = array ("0" => "0", "1" => "1", "2" => "2");
+
+          foreach ($sems as $siglasem => $descsem) {
+                  if ($siglasem == $sem){
+                    $sematu .= "<option selected>".$descsem;
+                  }
+                  else{
+                   $sematu .= "<option value=\"$siglasem\"" .$Sel.">$descsem</option>\n";
+                  }
+			}
+
+         RETURN $sematu;
+  }
+  
+function lista_ordem($ordem)  {
+         $order = array ("1" => "Alfabética", "2" => "Matrícula", "3" => "Posição");
+
+          foreach ($order as $siglaord => $descord) {
+                  if ($siglaord == $ordem){
+                    $ordens .= "<option selected>".$descord;
+                  }
+                  else{
+                   $ordens .= "<option value=\"$siglaord\"" .$Sel.">$descord</option>\n";
+                  }
+			}
+
+         RETURN $ordens;
+  } 
+  
+function strace($a){
+    $a = eregi_replace("[àáâäã]","a",$a);
+    $a = eregi_replace("[èéêë]","e",$a);
+    $a = eregi_replace("[ìíîï]","i",$a);
+    $a = eregi_replace("[òóôöõ]","o",$a);
+    $a = eregi_replace("[ùúûü]","u",$a);
+    $a = eregi_replace("[ÀÁÂÄÃ]","A",$a);
+    $a = eregi_replace("[ÈÉÊË]","E",$a);
+    $a = eregi_replace("[ÌÍÎÏ]","I",$a);
+    $a = eregi_replace("[ÒÓÔÖÕ]","O",$a);
+    $a = eregi_replace("[ÙÚÛÜ]","U",$a);
+    $a = eregi_replace("ç","c",$a);
+    $a = eregi_replace("Ç","C",$a);
+    $a = eregi_replace("ñ","n",$a);
+    $a = eregi_replace("Ñ","N",$a);
+    $a = str_replace("´","",$a);
+    $a = str_replace("`","",$a);
+    $a = str_replace("¨","",$a);
+    $a = str_replace("^","",$a);
+    $a = str_replace("~","",$a);
+    $a = str_replace("\'"," ",$a);
+ 
+  return $a;
+}
+
+function stracep($a){
+
+    $a = str_replace("\'"," ",$a);
+    $a = str_replace('\"'," ",$a);
+ 
+  return $a;
+}
+
+ 
+function get_ip()
+{   $variables = array('REMOTE_ADDR',
+                      'HTTP_X_FORWARDED_FOR',
+                      'HTTP_X_FORWARDED',
+                      'HTTP_FORWARDED_FOR',
+                      'HTTP_FORWARDED',
+                      'HTTP_X_COMING_FROM',
+                      'HTTP_COMING_FROM',
+                      'HTTP_CLIENT_IP');
+
+   $return = 'Unknown';
+
+   foreach ($variables as $variable)
+   {
+       if (isset($_SERVER[$variable]))
+       {
+           $return = $_SERVER[$variable];
+           break;
+       }
+   }
+   
+   return $return;
+}  
+  
+function abreviar_nome ($nome)
+{
+// divide o nome pelo espaço entre os mesmos
+$partes_nome     = explode (" ",trim($nome));
+// pega o total de palavras do nome
+$total             = count($partes_nome);
+$vetor_ignora     = array('de', 'da', 'das', 'do', 'dos');
+
+foreach ($partes_nome as $indice =>$palavras)
+{
+  // nao permite que seja abreviado o primeiro, nem o ultimo nome
+  if ($indice!=0 and $indice!=($total-1) )
+      // verifica se 'de', 'do' ou otras ligações estão presentes no nome
+      if (in_array($palavras,$vetor_ignora))
+      {
+          $nome_abrv .= " ".$palavras;          
+      } else {          
+          $nome_abrv.= " ". strtoupper(substr($palavras,0,1)).".";          
+      }
+}
+
+$abreviado = ucfirst($partes_nome[0])." ".$nome_abrv." ".ucfirst($partes_nome[$total-1]);
+
+return $abreviado;
+}
+
+function formatafloat2($numero){
+  $var = strlen($numero);
+  $parte1 = substr($numero,$var-2,$var);
+  $parte2 = substr($numero,0,$var-2);
+  $formatado = $parte2.'.'.$parte1;
+  return $formatado;	
+}
+
+function mens($cod)
+       {
+       		switch ($cod)
+            	{	case 0:  // Conexao com banco com problemas, usuario ou senha
+						$mens = "<b>Erro na Conexao com o MySQL</b>";
+                        break;
+                    case 1:  //Banco de Dados nao existe
+						$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    				Dados Socios - ".mysql_error() ."</b>";
+                        break;
+                    case 2:  // Nao consegui incluir o registro
+                    	$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    			Dados Sócios - ".mysql_error() ."<br> ".
+                    			"Nao conseguiu cadastrar. "."<br>".
+                    			$sql."</b>";
+					case 3:  // Nao conseguiu incluir registro
+                    	$mens = "<b>Erro na Conexao com o MySQL no Banco de
+                    			Dados Sócios - ".mysql_error() ."<br> ".
+                    			"Nao conseguiu cadastrar. "."<br>".
+                    			$sql."</b>";
+                    case 4: // Cadastro com sucesso  com codigo
+                    	$mens = "<br><br><b>Parabens, seu cadastro foi executado
+    	   		 		com sucesso. <b>";
+                    case 5: // Alteracao com sucesso
+                    	$mens = "<br><br><b>Alterado com sucesso </b>";
+                    default:
+                    	 $mens = "Falhou";
+				}
+			return $mens;
+	   }
+	   
+	   
+
+function Cabec($pdf,$Modelo,$Titulo)
+{
+
+if ( $Modelo == 1 ) {
+
+$l=6; // DEFINI ESTA VARIAVEL PARA ALTURA DA LINHA
+$xEmpresa='EMPRESA PARA TESTE';
+$xCompl1='FACULDADES INTEGRADAS DA UNIÃO EDUCACIONAL DO PLANALTO CENTRAL - FACIPLAC';
+$xCompl2='Aprovadas pela Portaria SESu/MEC N. 368/2008 de 19/05/2008 (DOU 20/05/2008)';
+$pdf->SetXY(10,05); 
+$pdf->Rect(10,10,190,50); 
+$pdf->Image('logo.jpg', 100,11,10); 
+$pdf->SetFont('Arial','B',11); // DEFINE A FONTE ARIAL, NEGRITO (B), DE TAMANHO 8
+$pdf->SetXY(156,10);
+$pdf->Cell(40,$l,'Ano / Semestre: '.$_REQUEST['anopric'].'/'.$_REQUEST['sempric'],'0',1,'C');
+
+$pdf->SetFont('Arial','B',11); // DEFINE A FONTE ARIAL, NEGRITO (B), DE TAMANHO 8
+$pdf->SetXY(10,20);
+$pdf->Cell(190,$l,$xEmpresa,'0',1,'C');
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell(190,$l,$xCompl1,'0',1,'C');
+$pdf->SetXY(10,29);
+$pdf->SetFont('Arial','B',7);
+$pdf->Cell(190,$l,$xCompl2,'0',1,'C');
+$pdf->Image('logo.jpg',97,36,15); // INSERE UMA LOGOMARCA NO PONTO X = 11, Y = 11, E DE TAMANHO 40.
+
+$pdf->SetXY(10,48);
+$pdf->SetFont('Arial','B',13);
+$pdf->Cell(190,$l,$Titulo,'0',1,'C');
+
+$pdf->SetXY(10,55);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(190,$l,$_SESSION['curso'],'0',1,'C');
+
+$pdf->SetXY(10,60);
+
+$pdf->line(10,60,200,60);
+$pdf->SetFont('Arial','',9);
+$pdf->Cell(5,$l,'Nº',0,0,'L');
+$pdf->SetX(20);//
+$pdf->Cell(10,$l,'Matrícula',0,0,'L');
+$pdf->SetX(45);
+$pdf->Cell(50,$l,'Aluno',0,0,'L');
+$pdf->SetX(130);
+$pdf->Cell(10,$l,'Situação',0,0,'L');
+$pdf->SetX(150);
+$pdf->Cell(15,$l,'Data Situação',0,0,'L');
+
+$pdf->Cell(190,4,'',0,0,'C');
+$pdf->SetXY(10,62);
+	
+}
+elseif ( $Modelo == 2)	{
+$l=6; // DEFINI ESTA VARIAVEL PARA ALTURA DA LINHA
+$xEmpresa='EMPRESA PARA TESTE';
+//$xCompl1='FACULDADES INTEGRADAS DA UNIÃO EDUCACIONAL DO PLANALTO CENTRAL - FACIPLAC';
+//$xCompl2='Aprovadas pela Portaria SESu/MEC N. 368/2008 de 19/05/2008 (DOU 20/05/2008)';
+$pdf->SetXY(10,05); 
+$pdf->Rect(10,10,190,40); 
+$pdf->Image('logo.jpg', 13,11,35);
+$pdf->SetFont('Arial','B',11); // DEFINE A FONTE ARIAL, NEGRITO (B), DE TAMANHO 8
+$pdf->SetXY(156,10);
+$pdf->Cell(40,$l,'Ano / Semestre: '.$_REQUEST['anopric'].'/'.$_REQUEST['sempric'],'0',1,'C');
+
+
+
+$pdf->SetFont('Arial','B',11); // DEFINE A FONTE ARIAL, NEGRITO (B), DE TAMANHO 8
+$pdf->SetXY(10,20);
+$pdf->Cell(190,$l,$xEmpresa,'0',1,'C');
+$pdf->SetFont('Arial','B',8);
+
+$pdf->SetXY(10,33);
+$pdf->SetFont('Arial','B',15);
+$pdf->Cell(190,$l,$Titulo,'0',1,'C');
+
+//$pdf->SetXY(10,45);
+//$pdf->SetFont('Arial','B',12);
+//$pdf->Cell(190,$l,$_SESSION['curso'],'0',1,'C');
+
+
+$pdf->SetXY(10,45);
+//$pdf->line(10,50,200,60);
+$pdf->SetFont('Arial','',9);
+$pdf->Cell(5,$l,'Nº',0,0,'L');
+
+$pdf->SetX(20);//
+$pdf->Cell(10,$l,'Matrícula',0,0,'L');
+$pdf->SetX(45);
+$pdf->Cell(50,$l,'Aluno',0,0,'L');
+$pdf->SetX(130);
+$pdf->Cell(10,$l,'Status',0,0,'L');
+$pdf->SetX(150);
+$pdf->Cell(15,$l,'Data Status',0,0,'L');
+
+//$pdf->Cell(190,4,'',0,0,'C');
+
+$pdf->SetXY(10,47);
+	
+}
+		
+}
+
+Function Rodape($pdf)
+{
+$pdf->SetXY(10,265);
+$pdf->Rect(10,265,190,6);
+$pdf->SetFont('Arial','',8);
+$pdf->SetXY(10,260);
+$pdf->Cell(40,16,'Data: '.date('d/m/Y - H:i:s') ,0,0,'L'); // INSIRO A DATA CORRENTE NA CELULA
+$pdf->SetXY(10,265);
+$pdf->Cell(186,6,'Página '.$pdf->PageNo().' de {nb}',0,0,'R');	
+}
+	   
+?>

@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+ <TITLE>Novo Documento</TITLE>
+		<script type="text/javascript" src="scripts/wysiwyg.js"></script>
+		<script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
+		<script type="text/javascript">
+			// Use it to attach the editor to all textareas with full featured setup
+			//WYSIWYG.attach('all', full);
+
+			// Use it to attach the editor directly to a defined textarea
+			WYSIWYG.attach('legenda'); // default setup
+			//WYSIWYG.attach('legenda', full); // full featured setup
+			//WYSIWYG.attach('legenda', small); // small setup
+
+			// Use it to display an iframes instead of a textareas
+			//WYSIWYG.display('all', full);
+		</script>
+
+</HEAD>
+<BODY>
+  <form method="get" action='recebe_dados.php'>
+<textarea id=legenda style="width:210px" rows="5" style="font-size:8pt" name="legenda">
+</textarea>
+<input type="submit" value="Botão">
+</form>
+</BODY>
+</HTML>

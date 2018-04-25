@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Demo_Turma" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="i_ano" class="java.lang.String"/>
+	<parameter name="i_sem" class="java.lang.String"/>
+	<parameter name="i_idturma" class="java.lang.String"/>
+	<parameter name="i_logo1" class="java.lang.String"/>
+	<parameter name="i_logo2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+  (SELECT A1_MATRICULA FROM SA101 WHERE A1_ID = AA_IDALUNO) AS MAT,
+  (SELECT A1_NOME FROM SA101 WHERE A1_ID = AA_IDALUNO) AS ALUNO,AA_IDTURMA,
+(select sum(
+  case
+  when (TCH1 > LIMIT) then
+  LIMIT
+  when (TCH1 <= LIMIT) then TCH1 end
+  ) as TCH
+  from
+  (SELECT SUM(C5.C5_CH) AS TCH1, C1.C1_LIMITECH AS LIMIT FROM sc501 C5, sc101 C1
+  where c5.c5_idatividade = c1.c1_id
+  and c5.c5_filial = c1.c1_filial
+  and c5.c5_idaluno = aa_idaluno
+  AND C5.c5_filial = '00'
+  group BY C5.c5_idaluno, C5.c5_idatividade, C1.C1_LIMITECH) as c6) AS TCH
+FROM SAA01
+WHERE AA_FILIAL = '00'
+AND AA_ANO = $P{i_ano}
+AND AA_SEMESTRE = $P{i_sem}
+AND AA_IDTURMA = $P{i_idturma}
+AND AA_MODAL = 'N'
+ORDER BY 2]]>
+	</queryString>
+	<field name="MAT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ALUNO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AA_IDTURMA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TCH" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="AA_IDTURMA" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{AA_IDTURMA}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<staticText>
+					<reportElement x="81" y="0" width="440" height="13"/>
+					<box leftPadding="2">
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="521" y="0" width="32" height="13"/>
+					<box>
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[C.H.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="0" width="78" height="13"/>
+					<box leftPadding="2">
+						<pen lineWidth="0.75"/>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Matrícula]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="163" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="70" width="550" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Aprovadas pela Portaria SESu/MEC N. 368/2008 de 19/05/2008 (DOU 20/05/2008)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="122" width="550" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Relatório semestral de atividades complementares]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="58" width="550" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[FACULDADES INTEGRADAS DA UNIÃO EDUCACIONAL DO PLANALTO CENTRAL - FACIPLAC]]></text>
+			</staticText>
+			<image>
+				<reportElement x="247" y="5" width="62" height="36"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{i_logo1}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="197" y="85" width="198" height="34"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{i_logo2}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="4" y="42" width="550" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA['UNIÃO EDUCACIONAL DO PLANALTO CENTRAL']]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="146" width="100" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{AA_IDTURMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="67" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="0" width="430" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ALUNO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="521" y="0" width="33" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{TCH}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="4" y="1" width="426" height="13"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="430" y="1" width="124" height="13"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
