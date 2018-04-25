@@ -1,3 +1,0 @@
-<?php
-$sql_sa301 = "SELECT A3_ID, A3_DESCR FROM SA301 ORDER BY A3_DESCR";
-?>
